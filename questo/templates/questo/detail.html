@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>
+            <h1>{{task.text}}</h1>
+        </legend>
+        <table>
+            <tr>
+                <th>Status: </th>
+                <td>{{task.status_translation}}</td>
+                <th>Fällig: </th>
+                <td>{{task.priority_translation}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="{% url 'questo:change_status' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <select name="status">
+                            <option value="T">Zu tun</option>
+                            <option value="D">Erledigt</option>
+                            <option value="C">Canceln</option>
+                        </select>
+                        <input type="submit" value="Ändern">
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'questo:change_priority' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <select name="priority">
+                            <option value="S">Heute</option>
+                            <option value="A">Diese Woche</option>
+                            <option value="B">Diesen Monat</option>
+                        </select>
+                        <input type="submit" value="Ändern">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'questo:index' %}">Return to Questo</a>
+                </td>
+            </tr>
+        </table>       
+    </fieldset>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questo</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>
+            <h1>Questo</h1>
+        </legend>
+        <table>
+            <tr>
+                <th>Quest</th>
+                <th>Progress</th>
+                <th>Priority</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>               
+                <td><a href="{% url 'questo:detail' task.id %}">{{task.text}}</a></td>
+                <td>{{task.status_translation}}</td>
+                <td>{{task.priority_translation}}</td>
+                <td>
+                    <form action="{% url 'questo:delete_task' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Löschen">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <form action="{% url 'questo:add_task' %}" method="POST">
+                        {% csrf_token %}
+                        <label for="Aufgaben" class="form-label">Quest: </label>
+                        <input type="text" value="" id="text" name="text" placeholder="neue Quest..."><br />
+                        <select name="priority">
+                            <option value="S">S-Rank</option>
+                            <option value="A">A-Rank</option>
+                            <option value="B">B-Rank</option>
+                        </select>
+                        <input type="submit" value="Quest hinzufügen">
+                    </form>
+                </td>
+            </tr>
+    </fieldset>
+</body>
+
+</html>
